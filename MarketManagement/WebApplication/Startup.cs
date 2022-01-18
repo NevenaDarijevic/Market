@@ -44,6 +44,8 @@ namespace WebApplication
             services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
 
             services.AddTransient<IGetCategoryByIdUseCase, GetCategoryByIdUseCase>();
+
+            services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
