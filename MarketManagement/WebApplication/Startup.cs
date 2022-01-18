@@ -40,6 +40,10 @@ namespace WebApplication
             services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
 
             services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
+
+            services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
+
+            services.AddTransient<IGetCategoryByIdUseCase, GetCategoryByIdUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

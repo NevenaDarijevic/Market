@@ -12,15 +12,17 @@
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var category in categories)
             {
-                <tr>
-                    <td>@category.Name</td>
-                    <td>@category.Description</td>
-                </tr>
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                <td>  <button type="button" @onclick="@(() => EditCategory(category))" class="btn btn-link">Edit</button></td>
+            </tr>
             }
         </tbody>
     </table>
@@ -31,13 +33,17 @@
 
 @code {
     private List<Category> categories;
-         protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            categories = ViewCategoryUseCase.Execute()?.ToList();
-        }
-        private void OnClickAddCategory()
-        {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        categories = ViewCategoryUseCase.Execute()?.ToList();
+    }
+    private void OnClickAddCategory()
+    {
         NavigationManager.NavigateTo("/addcategory");
-        }
+    }
+    private void EditCategory(Category category)
+    {
+        NavigationManager.NavigateTo($"/editcategory/{category.CategoryId}");
+    }
 }
