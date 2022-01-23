@@ -1,0 +1,48 @@
+﻿@page "/products"
+@inject NavigationManager NavigationManager
+@inject UseCases.IViewProductsUseCase ViewProductsUseCase
+@inject UseCases.IGetCategoryByIdUseCase GetCategoryByIdUseCase
+
+<h3>Products</h3>
+<br />
+@if (products != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@GetCategoryByIdUseCase.Execute(product.CategoryId)?.Name</td>
+                    <td>@product.Name</td>
+                    <td>@(Math.Round(product.Price,2))</td>
+                    <td>@product.Quantity</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+    private IEnumerable<Product> products;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadProducts();
+    }
+    private void LoadProducts()
+    {
+        products = ViewProductsUseCase.Execute()?.ToList();
+    }
+}
