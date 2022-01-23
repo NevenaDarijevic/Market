@@ -20,13 +20,16 @@
         <tbody>
             @foreach (var product in products)
             {
-                <tr>
-                    <td>@GetCategoryByIdUseCase.Execute(product.CategoryId.Value)?.Name</td>
-                    <td>@product.Name</td>
-                    <td>@(Math.Round(product.Price.Value,2))</td>
-                    <td>@product.Quantity</td>
+            <tr>
+                <td>@GetCategoryByIdUseCase.Execute(product.CategoryId.Value)?.Name</td>
+                <td>@product.Name</td>
+                <td>@(Math.Round(product.Price.Value,2))</td>
+                <td>@product.Quantity</td>
+                <td>
+                    <button type="button" @onclick="@(() => OnEditProduct(product))" class="btn btn-link">Edit</button>
+                </td>
 
-                </tr>
+            </tr>
             }
         </tbody>
     </table>
@@ -51,4 +54,9 @@
     {
         NavigationManager.NavigateTo("/addproduct");
     }
+    private void OnEditProduct(Product product)
+    {
+        NavigationManager.NavigateTo($"/editproduct/{product.ProductId}");
+    }
+  
 }
