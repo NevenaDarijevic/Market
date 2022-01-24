@@ -1,0 +1,23 @@
+﻿@page "/cashierconsole"
+<h3>Cashier's Console</h3>
+<br/>
+<div class="row">
+    <div class="col-4">
+        <WebApplication.Controls.SelectProductForSellingComponent OnProductSelected="SelectProduct"></WebApplication.Controls.SelectProductForSellingComponent>
+    <br/>
+        <WebApplication.Controls.SellProductComponent SelectedProduct="selectedProduct" OnProductSold="SellProduct"></WebApplication.Controls.SellProductComponent>
+    </div>
+    <div class="col">place holder</div>
+</div>
+@code {
+    private Product selectedProduct;
+    private void SelectProduct(Product p)
+    {
+        selectedProduct = p;
+
+    }
+    private void SellProduct(Product p)
+    {
+
+    }
+}
