@@ -34,6 +34,10 @@
 
     private Product productToSell;
     private string errorMessage;
+
+    [Parameter]
+    public string Cashier { get; set; }
+
     [Parameter]
     public Product SelectedProduct { get; set; }
 
@@ -63,6 +67,11 @@
     }
     private void SellProduct()
     {
+        if (string.IsNullOrWhiteSpace(Cashier))
+        {
+            errorMessage = "The cashier's name is missing.";
+            return;
+        }
         var product = GetProductByIdUseCase.Execute(productToSell.ProductId);
         if (productToSell.Quantity <= 0)
         {
@@ -70,10 +79,11 @@
         }
         else if (product.Quantity >= productToSell.Quantity)
         {
+
             OnProductSold.InvokeAsync(productToSell);
             errorMessage = string.Empty;
-            SellProductUseCase.Execute(productToSell.ProductId, productToSell.Quantity.Value); // Bez Value baca exc:   Severity	Code	Description	Project	File	Line	Suppression State
-                                                                                               // Error CS1503  Argument 2: cannot convert from 'int?' to 'int' WebApplication C:\Users\Nevena\source\repos\asp.netApp\MarketManagement\WebApplication\Controls\SellProductComponent.razor 71  Active
+            SellProductUseCase.Execute(Cashier,productToSell.ProductId, productToSell.Quantity.Value); // Bez Value baca exc:   Severity	Code	Description	Project	File	Line	Suppression State
+                                                                                                       // Error CS1503  Argument 2: cannot convert from 'int?' to 'int' WebApplication C:\Users\Nevena\source\repos\asp.netApp\MarketManagement\WebApplication\Controls\SellProductComponent.razor 71  Active
 
         }
 
