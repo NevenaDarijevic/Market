@@ -6,9 +6,9 @@
             <th>Cashier</th>
             <th>Product Name</th>
             <th>Date</th>
-            <th>Quantity BEFORE</th>
-            <th>Quantity SOLD</th>
-            <th>Quantity AFTER</th>
+            <th>Qty Before</th>
+            <th>Qty Sold</th>
+            <th>Qty After</th>
             <th>Sold Amt</th>
         </tr>
     </thead>
@@ -35,7 +35,7 @@
 
     public void LoadTransactions(string cashier)
     {
-        TransactionsForTodayUseCase.Execute(cashier);
+        transactions=TransactionsForTodayUseCase.Execute(cashier);
         StateHasChanged();
     }
 }

@@ -9,7 +9,7 @@ namespace CoreBusiness
    public class Transaction
     {
         public int TransactionId { get; set; }
-        public DateTime Time{ get; set; }
+        public DateTime Time { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; } //if it has been changed
         public int BeforeQuantity { get; set; }

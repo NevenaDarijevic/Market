@@ -40,7 +40,7 @@ namespace Plugins.DataStore.InMemory
            
         }
 
-        public void SaveTranaction(string cashier,int productId,string productName, double price,int beforeQuantity, int soldQuantity)
+        public void SaveTransaction(string cashier,int productId,string productName, double price,int beforeQuantity, int soldQuantity)
         {
             int newId=0;
             if(transactions!=null && transactions.Count > 0)
