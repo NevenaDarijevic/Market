@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreBusiness
@@ -9,5 +10,8 @@ namespace CoreBusiness
         [Required]
         public String Name { get; set; }
         public String Description { get; set; }
+
+        //navigation property for entity framework core
+        public List<Product> Products { get; set; }
     }
 }

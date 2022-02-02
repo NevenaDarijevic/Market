@@ -27,7 +27,7 @@ namespace Plugins.DataStore.InMemory
                   new Product
                 {
                     ProductId=3, CategoryId=2, Name="Product3", Quantity=3, Price=4444
-                },
+                }
 
             };
         }
