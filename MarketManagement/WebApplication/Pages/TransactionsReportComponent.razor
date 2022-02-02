@@ -1,8 +1,8 @@
 ﻿@page "/transactionsreport"
 @inject IGetTransactionsUseCase GetTransactionsUseCase
-
+@inject IJSRuntime JSRuntime
 <div class="row">
-    <div class="col-4">
+    <div class="col-2">
         <label for="cashier">Cashier Name</label>
         <input type="text" id="cashier" class="form-control" @bind-value="cashier" />
     </div>
@@ -15,12 +15,18 @@
         <input type="date" id="end" class="form-control" @bind-value="end" />
     </div>
     <div class="col-2">
+        <label>&nbsp;</label>
         <button type="button" class="btn btn-primary" @onclick="LoadTransactions">Search</button>
+    </div>
+    <div class="col-2">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-primary" @onclick="PrintReport">Print</button>
     </div>
 </div>
 <br />
 @if (transactions != null)
 {
+<div id="printarea">
     <table class="table">
         <thead>
             <tr>
@@ -37,29 +43,31 @@
         <tbody>
             @foreach (var t in transactions)
             {
-            <tr>
-                <td>@t.Cashier</td>
-                <td>@t.ProductName</td>
-                <td>@t.Time.ToString("yyyy-MM-dd hh:mm")</td>
-                <td style="text-align:right">@(string.Format("{0:c}",t.Price))</td>
-                <td>@t.BeforeQuantity</td>
-                <td>@t.SoldQuantity</td>
-                <td>@(t.BeforeQuantity-t.SoldQuantity)</td>
-                <td style="text-align:right">@(string.Format("{0:c}",t.SoldQuantity*t.Price))</td>
-            </tr>
+                <tr>
+                    <td>@t.Cashier</td>
+                    <td>@t.ProductName</td>
+                    <td>@t.Time.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td style="text-align:right">@(string.Format("{0:c}",t.Price))</td>
+                    <td>@t.BeforeQuantity</td>
+                    <td>@t.SoldQuantity</td>
+                    <td>@(t.BeforeQuantity-t.SoldQuantity)</td>
+                    <td style="text-align:right">@(string.Format("{0:c}",t.SoldQuantity*t.Price))</td>
+                </tr>
             }
-         
+
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="6">&nbsp;</td>
                 <td style="text-align:right"><b>Total:</b></td>
                 <td style="text-align:right"><b>@(string.Format("{0:c}", transactions.Sum(x => x.Price * x.SoldQuantity)))</b></td>
-                
+
             </tr>
         </tfoot>
 
     </table>
+</div>
+   
 }
 @code {
     private string cashier;
@@ -77,4 +85,9 @@
     {
         transactions = GetTransactionsUseCase.Execute(cashier, start, end);
     }
+
+    private void PrintReport()
+        {
+        JSRuntime.InvokeVoidAsync("print");
+        }
 }
