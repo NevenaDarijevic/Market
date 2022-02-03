@@ -1,6 +1,9 @@
 ﻿@page "/transactionsreport"
+@attribute [Authorize(Policy = "AdminOnly")]
+
 @inject IGetTransactionsUseCase GetTransactionsUseCase
 @inject IJSRuntime JSRuntime
+
 <div class="row">
     <div class="col-2">
         <label for="cashier">Cashier Name</label>
@@ -26,48 +29,48 @@
 <br />
 @if (transactions != null)
 {
-<div id="printarea">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Cashier</th>
-                <th>Product Name</th>
-                <th>Date</th>
-                <th>Price</th>
-                <th>Qty Before</th>
-                <th>Qty Sold</th>
-                <th>Qty After</th>
-                <th>Sold Amt</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var t in transactions)
-            {
+    <div id="printarea">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@t.Cashier</td>
-                    <td>@t.ProductName</td>
-                    <td>@t.Time.ToString("yyyy-MM-dd hh:mm")</td>
-                    <td style="text-align:right">@(string.Format("{0:c}",t.Price))</td>
-                    <td>@t.BeforeQuantity</td>
-                    <td>@t.SoldQuantity</td>
-                    <td>@(t.BeforeQuantity-t.SoldQuantity)</td>
-                    <td style="text-align:right">@(string.Format("{0:c}",t.SoldQuantity*t.Price))</td>
+                    <th>Cashier</th>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Qty Before</th>
+                    <th>Qty Sold</th>
+                    <th>Qty After</th>
+                    <th>Sold Amt</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var t in transactions)
+                {
+                    <tr>
+                        <td>@t.Cashier</td>
+                        <td>@t.ProductName</td>
+                        <td>@t.Time.ToString("yyyy-MM-dd hh:mm")</td>
+                        <td style="text-align:right">@(string.Format("{0:c}",t.Price))</td>
+                        <td>@t.BeforeQuantity</td>
+                        <td>@t.SoldQuantity</td>
+                        <td>@(t.BeforeQuantity-t.SoldQuantity)</td>
+                        <td style="text-align:right">@(string.Format("{0:c}",t.SoldQuantity*t.Price))</td>
+                    </tr>
+                }
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6">&nbsp;</td>
-                <td style="text-align:right"><b>Total:</b></td>
-                <td style="text-align:right"><b>@(string.Format("{0:c}", transactions.Sum(x => x.Price * x.SoldQuantity)))</b></td>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">&nbsp;</td>
+                    <td style="text-align:right"><b>Total:</b></td>
+                    <td style="text-align:right"><b>@(string.Format("{0:c}", transactions.Sum(x => x.Price * x.SoldQuantity)))</b></td>
 
-            </tr>
-        </tfoot>
+                </tr>
+            </tfoot>
 
-    </table>
-</div>
-   
+        </table>
+    </div>
+
 }
 @code {
     private string cashier;
@@ -87,7 +90,7 @@
     }
 
     private void PrintReport()
-        {
+    {
         JSRuntime.InvokeVoidAsync("print");
-        }
+    }
 }

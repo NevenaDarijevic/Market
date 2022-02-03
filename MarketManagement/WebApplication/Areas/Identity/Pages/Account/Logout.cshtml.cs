@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace WebApplication.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [IgnoreAntiforgeryToken] //added
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

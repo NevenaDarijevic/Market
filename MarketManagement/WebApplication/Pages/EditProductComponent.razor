@@ -1,4 +1,5 @@
 ﻿@page "/editproduct/{productId}"
+@attribute [Authorize(Policy = "AdminOnly")]
 
 @inject NavigationManager NavigationManager
 @inject UseCases.ProductsUseCases.IEditProductUseCase EditProductUseCase
@@ -67,9 +68,9 @@
             {
                 ProductId = prod.ProductId,
                 Price = prod.Price,
-                Name =prod.Name,
-                Quantity=prod.Quantity,
-                CategoryId=prod.CategoryId
+                Name = prod.Name,
+                Quantity = prod.Quantity,
+                CategoryId = prod.CategoryId
             };
             this.product = clonedProd;
         }
